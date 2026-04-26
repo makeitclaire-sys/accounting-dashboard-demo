@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EWS Accounting Portal - Demo</title>
+    <title>EWS Accounting Portal - Complete System</title>
     <style>
         * {
             margin: 0;
@@ -45,7 +45,6 @@
             background: var(--white);
         }
 
-        /* Sidebar */
         .sidebar {
             background: var(--gray-900);
             padding: 2rem 1.5rem;
@@ -145,7 +144,6 @@
             font-size: 12px;
         }
 
-        /* Main Content */
         .main {
             grid-column: 2;
             padding: 2rem;
@@ -208,7 +206,6 @@
             background: var(--gray-200);
         }
 
-        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -269,38 +266,6 @@
             color: var(--danger);
         }
 
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-            margin-bottom: 1.5rem;
-            animation: slideDown 0.7s ease;
-        }
-
-        .tab {
-            padding: 12px 16px;
-            border: none;
-            background: transparent;
-            color: var(--gray-500);
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
-        .tab:hover {
-            color: var(--gray-700);
-        }
-
-        /* Table */
         .table-container {
             background: white;
             border: 1px solid var(--gray-200);
@@ -373,13 +338,22 @@
             color: var(--danger);
         }
 
+        .status-scanning {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+
+        .status-reconciled {
+            background: #ecfdf5;
+            color: var(--success);
+        }
+
         .invoice-number {
             font-family: 'Courier New', monospace;
             font-weight: 600;
             color: var(--primary);
         }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -446,38 +420,25 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .upload-area {
-            border: 2px dashed var(--gray-300);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 1rem;
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .upload-area:hover {
-            border-color: var(--primary);
-            background: var(--gray-50);
+        .modal-footer button {
+            flex: 1;
         }
 
-        .upload-area.active {
-            border-color: var(--primary);
-            background: rgba(37, 99, 235, 0.05);
+        .btn-cancel {
+            background: var(--gray-200);
+            color: var(--gray-900);
         }
 
-        .upload-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
+        .btn-cancel:hover {
+            background: var(--gray-300);
         }
 
-        .upload-area p {
-            color: var(--gray-500);
-            font-size: 13px;
-            margin: 0;
-        }
-
-        /* Animations */
         @keyframes slideDown {
             from {
                 opacity: 0;
@@ -520,6 +481,26 @@
             }
         }
 
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .stat-card:nth-child(1) {
             animation: staggerIn 0.6s ease 0.1s both;
         }
@@ -536,33 +517,135 @@
             animation: staggerIn 0.6s ease 0.4s both;
         }
 
-        /* Check Deposit Form */
+        /* Info Box Styles */
+        .info-box {
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+        }
+
+        .info-box h3 {
+            margin: 0 0 0.5rem;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .info-box p {
+            margin: 0 0 1rem;
+            color: var(--gray-700);
+            font-size: 14px;
+        }
+
+        .info-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .feature-tag {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            border-left: 2px solid;
+        }
+
+        .feature-tag strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Scanner Feed */
+        .scanner-feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .scan-card {
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            padding: 12px;
+            background: var(--gray-50);
+            animation: slideInRight 0.4s ease;
+        }
+
+        .scan-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 11px;
+            color: var(--gray-500);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .status-dot.scanning {
+            background: var(--warning);
+            animation: pulse 1s infinite;
+        }
+
+        /* Client Detail Card */
+        .client-detail-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .client-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .client-info h3 {
+            margin: 0 0 0.5rem;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .client-info p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .client-balance {
+            text-align: right;
+        }
+
+        .balance-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .balance-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }
 
-        .modal-footer {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .modal-footer button {
-            flex: 1;
-        }
-
-        .btn-cancel {
-            background: var(--gray-200);
-            color: var(--gray-900);
-        }
-
-        .btn-cancel:hover {
-            background: var(--gray-300);
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -601,6 +684,10 @@
                 width: 100%;
                 margin-top: 1rem;
             }
+
+            .scanner-feed {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
         }
     </style>
 </head>
@@ -617,6 +704,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" onclick="switchTab('dashboard')">
                         <span class="nav-icon">📊</span> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="switchTab('scanner')">
+                        <span class="nav-icon">🔍</span> Scanner Monitor
                     </a>
                 </li>
                 <li class="nav-item">
@@ -654,90 +746,139 @@
 
         <!-- Main Content -->
         <main class="main">
-            <div class="header">
-                <div class="header-left">
-                    <h1 id="pageTitle">Dashboard</h1>
-                    <p id="pageSubtitle">Welcome back! Here's your business snapshot.</p>
-                </div>
-                <div class="header-right">
-                    <button class="btn-secondary" onclick="alert('Settings coming soon!')">⚙️ Settings</button>
-                    <button class="btn-primary" onclick="openModal('depositModal')">+ New Deposit</button>
-                </div>
-            </div>
-
             <!-- Dashboard Tab -->
             <div id="dashboard" class="tab-content active">
+                <div class="header">
+                    <div class="header-left">
+                        <h1 id="pageTitle">Dashboard</h1>
+                        <p id="pageSubtitle">Welcome back! Here's your EWS business snapshot.</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn-secondary" onclick="alert('Settings coming soon!')">⚙️ Settings</button>
+                    </div>
+                </div>
+
                 <div class="stats-grid">
-                    <div class="stat-card" onclick="alert('Filter by date range')">
+                    <div class="stat-card">
                         <div class="stat-label">Total Outstanding</div>
-                        <div class="stat-value">$47,850</div>
+                        <div class="stat-value" id="totalOutstanding">$47,850</div>
                         <div class="stat-change negative">↑ 2.3% from last month</div>
                     </div>
-                    <div class="stat-card" onclick="alert('View overdue invoices')">
+                    <div class="stat-card">
                         <div class="stat-label">Overdue Invoices</div>
                         <div class="stat-value">5</div>
                         <div class="stat-change negative">Requires action</div>
                     </div>
-                    <div class="stat-card" onclick="alert('Manage active clients')">
+                    <div class="stat-card">
                         <div class="stat-label">Active Clients</div>
                         <div class="stat-value">12</div>
                         <div class="stat-change">2 new this quarter</div>
                     </div>
-                    <div class="stat-card" onclick="alert('View payment trends')">
-                        <div class="stat-label">Payments This Month</div>
-                        <div class="stat-value">$28,300</div>
-                        <div class="stat-change">↑ 18% from last month</div>
+                    <div class="stat-card">
+                        <div class="stat-label">Checks Processed Today</div>
+                        <div class="stat-value" id="checksProcessed">0</div>
+                        <div class="stat-change">Real-time from scanner</div>
                     </div>
                 </div>
 
                 <div style="margin-top: 2rem;">
-                    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 1rem; color: var(--gray-900);">Recent Invoices</h2>
+                    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 1rem; color: var(--gray-900);">Recent Activity</h2>
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Client Name</th>
-                                    <th>Invoice #</th>
-                                    <th>Due Date</th>
+                                    <th>Type</th>
+                                    <th>Client / Check #</th>
                                     <th>Amount</th>
+                                    <th>Time</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="activityLog">
                                 <tr>
+                                    <td>Invoice Generated</td>
                                     <td>Page Community Properties</td>
-                                    <td class="invoice-number">PAGE-01</td>
-                                    <td>May 1, 2024</td>
                                     <td>$5,200</td>
-                                    <td><span class="status-badge status-paid">Paid</span></td>
+                                    <td>2 hours ago</td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
                                 </tr>
                                 <tr>
-                                    <td>Urban Development Corp</td>
-                                    <td class="invoice-number">URBAN-03</td>
-                                    <td>May 15, 2024</td>
+                                    <td>Check Scanned</td>
+                                    <td>Check #1042</td>
                                     <td>$8,750</td>
-                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td>1 hour ago</td>
+                                    <td><span class="status-badge status-reconciled">Reconciled</span></td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scanner Monitor Tab -->
+            <div id="scanner" class="tab-content">
+                <div class="header">
+                    <div class="header-left">
+                        <h1>Scanner Monitor</h1>
+                        <p>Real-time Canon CR-L1 check scanning & reconciliation</p>
+                    </div>
+                    <div class="header-right">
+                        <div style="display: flex; align-items: center; gap: 8px; background: #ecfdf5; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--success);">
+                            <div style="width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <span style="font-size: 12px; font-weight: 600; color: var(--success);">SCANNER ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid #0284c7;">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">🔌 Real-time Scanner Integration</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Monitors Canon CR-L1 USB scanner. Scans are automatically captured, analyzed, and reconciled to client accounts in real-time.</p>
+                    <div class="info-features">
+                        <div class="feature-tag" style="border-left-color: #0284c7;">
+                            <strong>Live Capture</strong><br/>Check image & MICR data
+                        </div>
+                        <div class="feature-tag" style="border-left-color: #0284c7;">
+                            <strong>Auto Parse</strong><br/>Extract check # & amount
+                        </div>
+                        <div class="feature-tag" style="border-left-color: #0284c7;">
+                            <strong>Auto Match</strong><br/>Link to client account
+                        </div>
+                        <div class="feature-tag" style="border-left-color: #0284c7;">
+                            <strong>Live Update</strong><br/>Dashboard reflects instantly
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 1rem; color: var(--gray-900);">Active Scans</h3>
+                <div class="scanner-feed" id="scannerFeed">
+                    <div style="grid-column: 1/-1; border: 2px dashed var(--gray-300); border-radius: 8px; padding: 2rem; text-align: center; color: var(--gray-500);">
+                        <p style="margin: 0; font-size: 12px;">Waiting for scanner input...</p>
+                        <p style="margin: 8px 0 0; font-size: 11px; color: var(--gray-400);">Scans will appear in real-time</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 1rem; color: var(--gray-900);">Scan History</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td>Riverside Investments LLC</td>
-                                    <td class="invoice-number">RIVER-07</td>
-                                    <td>Apr 30, 2024</td>
-                                    <td>$8,500</td>
-                                    <td><span class="status-badge status-overdue">Overdue</span></td>
+                                    <th>Check #</th>
+                                    <th>Amount</th>
+                                    <th>Client</th>
+                                    <th>Scan Time</th>
+                                    <th>Reconciliation</th>
+                                    <th>Status</th>
                                 </tr>
+                            </thead>
+                            <tbody id="scanHistory">
                                 <tr>
-                                    <td>Greenfield Partners</td>
-                                    <td class="invoice-number">GREEN-02</td>
-                                    <td>May 10, 2024</td>
-                                    <td>$12,300</td>
-                                    <td><span class="status-badge status-pending">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Metro Development Group</td>
-                                    <td class="invoice-number">METRO-05</td>
-                                    <td>May 5, 2024</td>
-                                    <td>$21,850</td>
-                                    <td><span class="status-badge status-overdue">Overdue</span></td>
+                                    <td style="font-family: 'Courier New', monospace; font-weight: 600;">1025</td>
+                                    <td>$5,200</td>
+                                    <td>Page Community Properties</td>
+                                    <td>2:45 PM</td>
+                                    <td>Full Payment</td>
+                                    <td><span class="status-badge status-reconciled">Complete</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -747,111 +888,69 @@
 
             <!-- Clients Tab -->
             <div id="clients" class="tab-content">
+                <div class="header">
+                    <div class="header-left">
+                        <h1>Clients</h1>
+                        <p>Manage all your EWS client accounts and contracts</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn-primary" onclick="openModal('clientModal')">+ Add Client</button>
+                    </div>
+                </div>
+
                 <div style="background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">👥 Client Management Module</h3>
-                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Centralized management of all client accounts with contract tracking and performance metrics.</p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--primary);">
-                            <strong>Account Numbering</strong><br/>Sequential client IDs (PAGE-01, URBAN-03)
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">👥 Client Management</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Track accounts, balances, and automatically update when checks are scanned and reconciled.</p>
+                    <div class="info-features">
+                        <div class="feature-tag" style="border-left-color: var(--primary);">
+                            <strong>Auto-ID</strong><br/>Unique account numbers
                         </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--primary);">
-                            <strong>Contract Tracking</strong><br/>Monitor contract length and renewal dates
+                        <div class="feature-tag" style="border-left-color: var(--primary);">
+                            <strong>Live Balance</strong><br/>Updates on each scan
                         </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--primary);">
-                            <strong>Balance Visibility</strong><br/>Real-time outstanding balance per client
+                        <div class="feature-tag" style="border-left-color: var(--primary);">
+                            <strong>Contract Track</strong><br/>Renewal monitoring
                         </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--primary);">
-                            <strong>Auto-Sync</strong><br/>Syncs with FreshBooks for live data
+                        <div class="feature-tag" style="border-left-color: var(--primary);">
+                            <strong>Payment History</strong><br/>YTD tracking
                         </div>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 1.5rem;">
-                    <button class="btn-primary" onclick="openModal('clientModal')">+ Add New Client</button>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Client Name</th>
-                                <th>Account #</th>
-                                <th>Contract Length</th>
-                                <th>Outstanding</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Page Community Properties</strong></td>
-                                <td class="invoice-number">PAGE-***</td>
-                                <td>5 Years</td>
-                                <td>$0</td>
-                                <td><button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">View</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Urban Development Corp</strong></td>
-                                <td class="invoice-number">URBAN-***</td>
-                                <td>3 Years</td>
-                                <td>$8,750</td>
-                                <td><button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">View</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Riverside Investments LLC</strong></td>
-                                <td class="invoice-number">RIVER-***</td>
-                                <td>5 Years</td>
-                                <td>$8,500</td>
-                                <td><button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">View</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Greenfield Partners</strong></td>
-                                <td class="invoice-number">GREEN-***</td>
-                                <td>2 Years</td>
-                                <td>$12,300</td>
-                                <td><button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">View</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Metro Development Group</strong></td>
-                                <td class="invoice-number">METRO-***</td>
-                                <td>4 Years</td>
-                                <td>$21,850</td>
-                                <td><button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">View</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div id="clientsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+                    <!-- Client cards will be generated here -->
                 </div>
             </div>
 
             <!-- Invoices Tab -->
             <div id="invoices" class="tab-content">
-                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--warning);">
-                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">📄 Invoice Management Module</h3>
-                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Automated invoice generation, sending, and payment tracking with sequential numbering per client.</p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--warning);">
-                            <strong>Auto-Generate</strong><br/>Monthly invoices with sequential numbers
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--warning);">
-                            <strong>Auto-Send</strong><br/>Scheduled email delivery to clients
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--warning);">
-                            <strong>Late Reminders</strong><br/>Auto-notify clients of overdue payments
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--warning);">
-                            <strong>Status Tracking</strong><br/>Filter by Paid, Pending, or Overdue
-                        </div>
+                <div class="header">
+                    <div class="header-left">
+                        <h1>Invoices</h1>
+                        <p>View and manage all EWS invoices</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn-primary" onclick="openModal('invoiceModal')">+ Generate Invoice</button>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 1.5rem;">
-                    <button class="btn-primary" onclick="openModal('invoiceModal')">+ Generate Invoice</button>
-                </div>
-
-                <div class="tabs" style="border-bottom: none; margin-bottom: 1.5rem;">
-                    <button class="tab active" onclick="filterInvoices('all')">All</button>
-                    <button class="tab" onclick="filterInvoices('paid')">Paid</button>
-                    <button class="tab" onclick="filterInvoices('pending')">Pending</button>
-                    <button class="tab" onclick="filterInvoices('overdue')">Overdue</button>
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--warning);">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">📄 Invoice Automation</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Auto-generate & send monthly invoices with sequential numbering. Track payments and send late reminders.</p>
+                    <div class="info-features">
+                        <div class="feature-tag" style="border-left-color: var(--warning);">
+                            <strong>Auto-Generate</strong><br/>Monthly schedules
+                        </div>
+                        <div class="feature-tag" style="border-left-color: var(--warning);">
+                            <strong>Sequential #</strong><br/>PAGE-01, PAGE-02...
+                        </div>
+                        <div class="feature-tag" style="border-left-color: var(--warning);">
+                            <strong>Auto-Send</strong><br/>Email delivery
+                        </div>
+                        <div class="feature-tag" style="border-left-color: var(--warning);">
+                            <strong>Late Alerts</strong><br/>Overdue tracking
+                        </div>
+                    </div>
                 </div>
 
                 <div class="table-container">
@@ -891,14 +990,6 @@
                                 <td>$8,750</td>
                                 <td><span class="status-badge status-pending">Pending</span></td>
                             </tr>
-                            <tr>
-                                <td class="invoice-number">RIVER-07</td>
-                                <td>Riverside Investments LLC</td>
-                                <td>Apr 30, 2024</td>
-                                <td>Apr 30, 2024</td>
-                                <td>$8,500</td>
-                                <td><span class="status-badge status-overdue">Overdue</span></td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -906,27 +997,33 @@
 
             <!-- Check Deposits Tab -->
             <div id="deposits" class="tab-content">
-                <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid #0284c7;">
-                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">💳 Check Deposit Module</h3>
-                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Smart check processing with image capture, OCR recognition, and automatic reconciliation.</p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid #0284c7;">
-                            <strong>Image Upload</strong><br/>Capture check photos via web or mobile
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid #0284c7;">
-                            <strong>OCR Extraction</strong><br/>Auto-extract check # and amount
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid #0284c7;">
-                            <strong>Auto-Reconcile</strong><br/>Match to invoice & update balance
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid #0284c7;">
-                            <strong>Client Notify</strong><br/>Email confirmation with check image
-                        </div>
+                <div class="header">
+                    <div class="header-left">
+                        <h1>Check Deposits</h1>
+                        <p>Monitor check scanning, reconciliation, and balance updates</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn-primary" onclick="openModal('depositModal')">+ Manual Entry</button>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 1.5rem;">
-                    <button class="btn-primary" onclick="openModal('depositModal')">+ Process Check Deposit</button>
+                <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid #0284c7;">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">💳 Check Deposit Processing</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Auto-capture checks from Canon CR-L1 scanner. Extracts check #, amount, and automatically reconciles to client accounts.</p>
+                    <div class="info-features">
+                        <div class="feature-tag" style="border-left-color: #0284c7;">
+                            <strong>Auto Capture</strong><br/>USB scanner input
+                        </div>
+                        <div class="feature-tag" style="border-left-color: #0284c7;">
+                            <strong>MICR Reading</strong><br/>Check # extraction
+                        </div>
+                        <div class="feature-tag" style="border-left-color: #0284c7;">
+                            <strong>Auto Match</strong><br/>Link to client
+                        </div>
+                        <div class="feature-tag" style="border-left-color: #0284c7;">
+                            <strong>Auto Reconcile</strong><br/>Balance updates
+                        </div>
+                    </div>
                 </div>
 
                 <div class="table-container">
@@ -934,33 +1031,21 @@
                         <thead>
                             <tr>
                                 <th>Check #</th>
-                                <th>Client</th>
                                 <th>Amount</th>
+                                <th>Client</th>
                                 <th>Received Date</th>
-                                <th>Reconciled</th>
+                                <th>Reconciled To</th>
+                                <th>Balance Impact</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="depositsTable">
                             <tr>
                                 <td style="font-family: 'Courier New', monospace; font-weight: 600;">1025</td>
-                                <td>Page Community Properties</td>
                                 <td>$5,200</td>
+                                <td>Page Community Properties</td>
                                 <td>May 2, 2024</td>
-                                <td><span class="status-badge status-paid">Done</span></td>
-                            </tr>
-                            <tr>
-                                <td style="font-family: 'Courier New', monospace; font-weight: 600;">1042</td>
-                                <td>Urban Development Corp</td>
-                                <td>$8,750</td>
-                                <td>May 16, 2024</td>
-                                <td><span class="status-badge status-paid">Done</span></td>
-                            </tr>
-                            <tr>
-                                <td style="font-family: 'Courier New', monospace; font-weight: 600;">1051</td>
-                                <td>Greenfield Partners</td>
-                                <td>$12,300</td>
-                                <td>May 11, 2024</td>
-                                <td><span class="status-badge status-paid">Done</span></td>
+                                <td>Invoice PAGE-01</td>
+                                <td><span class="status-badge status-reconciled">Paid in Full</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -969,81 +1054,129 @@
 
             <!-- Reports Tab -->
             <div id="reports" class="tab-content">
+                <div class="header">
+                    <div class="header-left">
+                        <h1>Reports</h1>
+                        <p>View EWS business performance reports</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn-primary" onclick="alert('Export to CSV')">📥 Export Reports</button>
+                    </div>
+                </div>
+
                 <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--success);">
-                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">📈 Reporting & Analytics Module</h3>
-                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Comprehensive financial insights and performance metrics for business intelligence and decision-making.</p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--success);">
-                            <strong>Revenue Reports</strong><br/>Monthly & annual income tracking
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">📈 Analytics & Reporting</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Real-time metrics based on invoice generation, check processing, and client payment patterns.</p>
+                    <div class="info-features">
+                        <div class="feature-tag" style="border-left-color: var(--success);">
+                            <strong>Revenue Reports</strong><br/>Monthly & annual
                         </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--success);">
-                            <strong>Collections Data</strong><br/>Collection rate & payment trends
+                        <div class="feature-tag" style="border-left-color: var(--success);">
+                            <strong>Collections</strong><br/>Payment rates & trends
                         </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--success);">
-                            <strong>DSO Metrics</strong><br/>Days Sales Outstanding analysis
+                        <div class="feature-tag" style="border-left-color: var(--success);">
+                            <strong>DSO Metrics</strong><br/>Days outstanding
                         </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--success);">
-                            <strong>Export Tools</strong><br/>CSV/PDF export for external reports
+                        <div class="feature-tag" style="border-left-color: var(--success);">
+                            <strong>Scan Activity</strong><br/>Processing volume
                         </div>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    <div class="stat-card" onclick="alert('Revenue report generated')">
+                <div class="stats-grid">
+                    <div class="stat-card">
                         <div class="stat-label">Monthly Revenue</div>
                         <div class="stat-value">$28,300</div>
                         <div class="stat-change">↑ 18% growth</div>
                     </div>
-                    <div class="stat-card" onclick="alert('Collection report generated')">
+                    <div class="stat-card">
                         <div class="stat-label">Collection Rate</div>
                         <div class="stat-value">89%</div>
                         <div class="stat-change">↓ 2% from last month</div>
                     </div>
-                    <div class="stat-card" onclick="alert('DSO report generated')">
+                    <div class="stat-card">
                         <div class="stat-label">Days Sales Outstanding</div>
                         <div class="stat-value">32 days</div>
                         <div class="stat-change">↓ 3 days improvement</div>
                     </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Checks Processed</div>
+                        <div class="stat-value">247</div>
+                        <div class="stat-change">This month</div>
+                    </div>
                 </div>
+
                 <div style="margin-top: 2rem;">
-                    <button class="btn-primary" onclick="alert('Export to CSV')">📥 Export All Reports</button>
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 1rem; color: var(--gray-900);">Client Aging</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Current</th>
+                                    <th>30-60 Days</th>
+                                    <th>60-90 Days</th>
+                                    <th>90+ Days</th>
+                                    <th>Total Outstanding</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Page Community Properties</strong></td>
+                                    <td>$0</td>
+                                    <td>$0</td>
+                                    <td>$0</td>
+                                    <td>$0</td>
+                                    <td>$0</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Urban Development Corp</strong></td>
+                                    <td>$8,750</td>
+                                    <td>$0</td>
+                                    <td>$0</td>
+                                    <td>$0</td>
+                                    <td>$8,750</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Riverside Investments LLC</strong></td>
+                                    <td>$0</td>
+                                    <td>$8,500</td>
+                                    <td>$0</td>
+                                    <td>$0</td>
+                                    <td>$8,500</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Check Deposit Modal -->
+    <!-- Modals -->
     <div id="depositModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">Process Check Deposit</div>
             
-            <div class="upload-area" onmouseover="this.classList.add('active')" onmouseout="this.classList.remove('active')" onclick="alert('File upload would open here')">
-                <div class="upload-icon">📸</div>
-                <p>Drag check image or click to upload</p>
-                <p style="font-size: 11px; margin-top: 4px; color: var(--gray-400);">PNG, JPG up to 10MB</p>
+            <div class="form-group">
+                <label>Check Number</label>
+                <input type="text" id="checkNum" placeholder="e.g., 1025" />
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>Check Number</label>
-                    <input type="text" placeholder="e.g., 1025" />
+                    <label>Amount</label>
+                    <input type="text" id="checkAmount" placeholder="$0.00" />
                 </div>
                 <div class="form-group">
-                    <label>Amount</label>
-                    <input type="text" placeholder="$0.00" />
+                    <label>Client</label>
+                    <select id="checkClient">
+                        <option>Select a client...</option>
+                        <option>Page Community Properties</option>
+                        <option>Urban Development Corp</option>
+                        <option>Riverside Investments LLC</option>
+                    </select>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Client</label>
-                <select>
-                    <option>Select a client...</option>
-                    <option>Page Community Properties</option>
-                    <option>Urban Development Corp</option>
-                    <option>Riverside Investments LLC</option>
-                    <option>Greenfield Partners</option>
-                    <option>Metro Development Group</option>
-                </select>
             </div>
 
             <div class="form-group">
@@ -1053,12 +1186,11 @@
 
             <div class="modal-footer">
                 <button class="btn-cancel" onclick="closeModal('depositModal')">Cancel</button>
-                <button class="btn-primary" onclick="alert('Check deposit processed! Confirmation email sent to client.'); closeModal('depositModal')">Process</button>
+                <button class="btn-primary" onclick="processDeposit()">Process</button>
             </div>
         </div>
     </div>
 
-    <!-- Invoice Modal -->
     <div id="invoiceModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">Generate Invoice</div>
@@ -1069,9 +1201,6 @@
                     <option>Select a client...</option>
                     <option>Page Community Properties</option>
                     <option>Urban Development Corp</option>
-                    <option>Riverside Investments LLC</option>
-                    <option>Greenfield Partners</option>
-                    <option>Metro Development Group</option>
                 </select>
             </div>
 
@@ -1085,19 +1214,13 @@
                 <input type="date" />
             </div>
 
-            <div class="form-group">
-                <label>Description</label>
-                <input type="text" placeholder="Service rendered for month of..." />
-            </div>
-
             <div class="modal-footer">
                 <button class="btn-cancel" onclick="closeModal('invoiceModal')">Cancel</button>
-                <button class="btn-primary" onclick="alert('Invoice generated and queued for sending!'); closeModal('invoiceModal')">Generate & Send</button>
+                <button class="btn-primary" onclick="closeModal('invoiceModal')">Generate & Send</button>
             </div>
         </div>
     </div>
 
-    <!-- Client Modal -->
     <div id="clientModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">Add New Client</div>
@@ -1109,12 +1232,7 @@
 
             <div class="form-group">
                 <label>Account Prefix</label>
-                <input type="text" placeholder="e.g., PAGE, URBAN, RIVER" />
-            </div>
-
-            <div class="form-group">
-                <label>Contract Length (Years)</label>
-                <input type="number" placeholder="e.g., 5" />
+                <input type="text" placeholder="e.g., PAGE, URBAN" />
             </div>
 
             <div class="form-group">
@@ -1124,37 +1242,42 @@
 
             <div class="modal-footer">
                 <button class="btn-cancel" onclick="closeModal('clientModal')">Cancel</button>
-                <button class="btn-primary" onclick="alert('Client added successfully!'); closeModal('clientModal')">Add Client</button>
+                <button class="btn-primary" onclick="closeModal('clientModal')">Add Client</button>
             </div>
         </div>
     </div>
 
     <script>
-        let currentTab = 'dashboard';
+        // Client Database
+        const clients = [
+            { id: 1, name: 'Page Community Properties', prefix: 'PAGE', monthlyAmount: 5200, balance: 0, ytd: 31200 },
+            { id: 2, name: 'Urban Development Corp', prefix: 'URBAN', monthlyAmount: 8750, balance: 8750, ytd: 43750 },
+            { id: 3, name: 'Riverside Investments LLC', prefix: 'RIVER', monthlyAmount: 8500, balance: 8500, ytd: 42500 },
+            { id: 4, name: 'Greenfield Partners', prefix: 'GREEN', monthlyAmount: 12300, balance: 12300, ytd: 61500 },
+            { id: 5, name: 'Metro Development Group', prefix: 'METRO', monthlyAmount: 21850, balance: 21850, ytd: 109250 }
+        ];
+
+        let scanCount = 0;
 
         function switchTab(tabName) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
 
-            // Remove active class from all nav links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
 
-            // Show selected tab
             const tabElement = document.getElementById(tabName);
             if (tabElement) {
                 tabElement.classList.add('active');
             }
 
-            // Add active class to clicked nav link
             event.target.closest('.nav-link')?.classList.add('active');
 
-            // Update page title
             const titles = {
                 dashboard: 'Dashboard',
+                scanner: 'Scanner Monitor',
                 clients: 'Clients',
                 invoices: 'Invoices',
                 deposits: 'Check Deposits',
@@ -1163,16 +1286,156 @@
 
             const subtitles = {
                 dashboard: 'Welcome back! Here\'s your EWS business snapshot.',
-                clients: 'Manage all your EWS client accounts and contracts.',
-                invoices: 'View and manage all EWS invoices.',
-                deposits: 'Process and reconcile EWS check deposits.',
-                reports: 'View EWS business performance reports.'
+                scanner: 'Real-time Canon CR-L1 check scanning & reconciliation',
+                clients: 'Manage all your EWS client accounts and contracts',
+                invoices: 'View and manage all EWS invoices',
+                deposits: 'Monitor check scanning, reconciliation, and balance updates',
+                reports: 'View EWS business performance reports'
             };
 
             document.getElementById('pageTitle').textContent = titles[tabName] || tabName;
             document.getElementById('pageSubtitle').textContent = subtitles[tabName] || '';
 
-            currentTab = tabName;
+            if (tabName === 'clients') {
+                renderClients();
+            }
+        }
+
+        function renderClients() {
+            const clientsList = document.getElementById('clientsList');
+            clientsList.innerHTML = clients.map(client => `
+                <div class="client-detail-card">
+                    <div class="client-header">
+                        <div class="client-info">
+                            <h3>${client.name}</h3>
+                            <p>Account: <span class="invoice-number">${client.prefix}-XX</span></p>
+                        </div>
+                        <div class="client-balance">
+                            <div class="balance-amount" style="color: ${client.balance > 0 ? 'var(--danger)' : 'var(--success)'}">
+                                $${client.balance.toLocaleString()}
+                            </div>
+                            <div class="balance-label">Outstanding</div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 1rem; border-top: 1px solid var(--gray-200);">
+                        <div>
+                            <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Monthly Invoice</div>
+                            <div style="font-size: 16px; font-weight: 700; color: var(--gray-900);">$${client.monthlyAmount.toLocaleString()}</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">YTD Total</div>
+                            <div style="font-size: 16px; font-weight: 700; color: var(--primary);">$${client.ytd.toLocaleString()}</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Status</div>
+                            <div style="font-size: 14px; font-weight: 600; color: ${client.balance > 0 ? 'var(--danger)' : 'var(--success)'};">${client.balance > 0 ? 'Outstanding' : 'Current'}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function simulateScan() {
+            const client = clients[Math.floor(Math.random() * clients.length)];
+            const checkNum = Math.floor(Math.random() * 9000) + 1000;
+            const amount = client.monthlyAmount;
+
+            // Add to scanner feed
+            const feed = document.getElementById('scannerFeed');
+            if (feed.querySelector('[style*="dashed"]')) {
+                feed.innerHTML = '';
+            }
+
+            const scanCard = document.createElement('div');
+            scanCard.className = 'scan-card';
+            scanCard.innerHTML = `
+                <div class="scan-status">
+                    <div class="status-dot"></div>
+                    <span>Reconciled</span>
+                </div>
+                <div style="font-size: 11px; color: var(--gray-500); margin-bottom: 6px;">Check #</div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; font-family: 'Courier New';">${checkNum}</div>
+                <div style="font-size: 12px; color: var(--primary); font-weight: 600; margin-bottom: 4px;">$${amount.toLocaleString()}</div>
+                <div style="font-size: 10px; color: var(--gray-600); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${client.name}</div>
+            `;
+            
+            feed.insertBefore(scanCard, feed.firstChild);
+
+            // Update client balance
+            client.balance = Math.max(0, client.balance - amount);
+            client.ytd += amount;
+
+            // Add to scan history
+            const history = document.getElementById('scanHistory');
+            const newRow = document.createElement('tr');
+            const now = new Date();
+            const time = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            newRow.innerHTML = `
+                <td style="font-family: 'Courier New', monospace; font-weight: 600;">${checkNum}</td>
+                <td>$${amount.toLocaleString()}</td>
+                <td>${client.name}</td>
+                <td>${time}</td>
+                <td>${client.balance > 0 ? 'Partial Payment' : 'Full Payment'}</td>
+                <td><span class="status-badge status-reconciled">Complete</span></td>
+            `;
+            
+            history.insertBefore(newRow, history.firstChild);
+
+            // Update dashboard
+            scanCount++;
+            document.getElementById('checksProcessed').textContent = scanCount;
+
+            // Add activity log entry
+            const activity = document.getElementById('activityLog');
+            const actRow = document.createElement('tr');
+            actRow.innerHTML = `
+                <td>Check Scanned</td>
+                <td>Check #${checkNum}</td>
+                <td>$${amount.toLocaleString()}</td>
+                <td>Just now</td>
+                <td><span class="status-badge status-reconciled">Reconciled</span></td>
+            `;
+            activity.insertBefore(actRow, activity.firstChild);
+
+            // Update dashboard balance
+            const totalOutstanding = clients.reduce((sum, c) => sum + c.balance, 0);
+            document.getElementById('totalOutstanding').textContent = '$' + totalOutstanding.toLocaleString();
+        }
+
+        function processDeposit() {
+            const checkNum = document.getElementById('checkNum').value;
+            const amount = parseFloat(document.getElementById('checkAmount').value.replace('$', '') || 0);
+            const clientName = document.getElementById('checkClient').value;
+
+            if (!checkNum || !amount || clientName === 'Select a client...') {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const client = clients.find(c => c.name === clientName);
+            if (client) {
+                client.balance = Math.max(0, client.balance - amount);
+                
+                const history = document.getElementById('scanHistory');
+                const newRow = document.createElement('tr');
+                const now = new Date();
+                const time = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                newRow.innerHTML = `
+                    <td style="font-family: 'Courier New', monospace; font-weight: 600;">${checkNum}</td>
+                    <td>$${amount.toLocaleString()}</td>
+                    <td>${client.name}</td>
+                    <td>${time}</td>
+                    <td>${client.balance > 0 ? 'Partial Payment' : 'Full Payment'}</td>
+                    <td><span class="status-badge status-reconciled">Complete</span></td>
+                `;
+                
+                history.insertBefore(newRow, history.firstChild);
+            }
+
+            closeModal('depositModal');
+            alert(`Check #${checkNum} processed! $${amount} reconciled to ${clientName}.`);
         }
 
         function openModal(modalId) {
@@ -1183,20 +1446,19 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
-        function filterInvoices(status) {
-            document.querySelectorAll('.tab').forEach((tab, index) => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            alert(`Filtering invoices by: ${status}`);
-        }
-
-        // Close modal when clicking outside
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal')) {
                 e.target.classList.remove('active');
             }
         });
+
+        // Demo: Press 'S' to simulate a scan
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 's' || e.key === 'S') simulateScan();
+        });
+
+        // Initialize clients display
+        renderClients();
     </script>
 </body>
 </html>
