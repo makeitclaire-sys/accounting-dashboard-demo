@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounting Portal - Demo</title>
+    <title>EWS Accounting Portal - Demo</title>
     <style>
         * {
             margin: 0;
@@ -609,8 +609,8 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <div class="logo-icon">$</div>
-                <span>AcctFlow</span>
+                <div class="logo-icon">⚡</div>
+                <span>EWS</span>
             </div>
             
             <ul class="nav-menu">
@@ -643,9 +643,9 @@
 
             <div class="sidebar-footer">
                 <div class="user-profile">
-                    <div class="avatar">JD</div>
+                    <div class="avatar">SP</div>
                     <div>
-                        <div style="color: var(--gray-200);">John Doe</div>
+                        <div style="color: var(--gray-200);">Sheldon Paige</div>
                         <div style="font-size: 11px;">Admin</div>
                     </div>
                 </div>
@@ -747,6 +747,25 @@
 
             <!-- Clients Tab -->
             <div id="clients" class="tab-content">
+                <div style="background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">👥 Client Management Module</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Centralized management of all client accounts with contract tracking and performance metrics.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--primary);">
+                            <strong>Account Numbering</strong><br/>Sequential client IDs (PAGE-01, URBAN-03)
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--primary);">
+                            <strong>Contract Tracking</strong><br/>Monitor contract length and renewal dates
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--primary);">
+                            <strong>Balance Visibility</strong><br/>Real-time outstanding balance per client
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--primary);">
+                            <strong>Auto-Sync</strong><br/>Syncs with FreshBooks for live data
+                        </div>
+                    </div>
+                </div>
+
                 <div style="margin-bottom: 1.5rem;">
                     <button class="btn-primary" onclick="openModal('clientModal')">+ Add New Client</button>
                 </div>
@@ -805,6 +824,25 @@
 
             <!-- Invoices Tab -->
             <div id="invoices" class="tab-content">
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--warning);">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">📄 Invoice Management Module</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Automated invoice generation, sending, and payment tracking with sequential numbering per client.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--warning);">
+                            <strong>Auto-Generate</strong><br/>Monthly invoices with sequential numbers
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--warning);">
+                            <strong>Auto-Send</strong><br/>Scheduled email delivery to clients
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--warning);">
+                            <strong>Late Reminders</strong><br/>Auto-notify clients of overdue payments
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--warning);">
+                            <strong>Status Tracking</strong><br/>Filter by Paid, Pending, or Overdue
+                        </div>
+                    </div>
+                </div>
+
                 <div style="margin-bottom: 1.5rem;">
                     <button class="btn-primary" onclick="openModal('invoiceModal')">+ Generate Invoice</button>
                 </div>
@@ -868,6 +906,25 @@
 
             <!-- Check Deposits Tab -->
             <div id="deposits" class="tab-content">
+                <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid #0284c7;">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">💳 Check Deposit Module</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Smart check processing with image capture, OCR recognition, and automatic reconciliation.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid #0284c7;">
+                            <strong>Image Upload</strong><br/>Capture check photos via web or mobile
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid #0284c7;">
+                            <strong>OCR Extraction</strong><br/>Auto-extract check # and amount
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid #0284c7;">
+                            <strong>Auto-Reconcile</strong><br/>Match to invoice & update balance
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid #0284c7;">
+                            <strong>Client Notify</strong><br/>Email confirmation with check image
+                        </div>
+                    </div>
+                </div>
+
                 <div style="margin-bottom: 1.5rem;">
                     <button class="btn-primary" onclick="openModal('depositModal')">+ Process Check Deposit</button>
                 </div>
@@ -912,6 +969,25 @@
 
             <!-- Reports Tab -->
             <div id="reports" class="tab-content">
+                <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--success);">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 16px; font-weight: 700; color: var(--gray-900);">📈 Reporting & Analytics Module</h3>
+                    <p style="margin: 0 0 1rem; color: var(--gray-700); font-size: 14px;">Comprehensive financial insights and performance metrics for business intelligence and decision-making.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--success);">
+                            <strong>Revenue Reports</strong><br/>Monthly & annual income tracking
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--success);">
+                            <strong>Collections Data</strong><br/>Collection rate & payment trends
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--success);">
+                            <strong>DSO Metrics</strong><br/>Days Sales Outstanding analysis
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; font-size: 12px; border-left: 2px solid var(--success);">
+                            <strong>Export Tools</strong><br/>CSV/PDF export for external reports
+                        </div>
+                    </div>
+                </div>
+
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                     <div class="stat-card" onclick="alert('Revenue report generated')">
                         <div class="stat-label">Monthly Revenue</div>
@@ -1086,11 +1162,11 @@
             };
 
             const subtitles = {
-                dashboard: 'Welcome back! Here\'s your business snapshot.',
-                clients: 'Manage all your client accounts and contracts.',
-                invoices: 'View and manage all invoices.',
-                deposits: 'Process and reconcile check deposits.',
-                reports: 'View business performance reports.'
+                dashboard: 'Welcome back! Here\'s your EWS business snapshot.',
+                clients: 'Manage all your EWS client accounts and contracts.',
+                invoices: 'View and manage all EWS invoices.',
+                deposits: 'Process and reconcile EWS check deposits.',
+                reports: 'View EWS business performance reports.'
             };
 
             document.getElementById('pageTitle').textContent = titles[tabName] || tabName;
